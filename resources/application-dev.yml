@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/extintores
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+jwt:
+  secret: "3c9842a2784534f3a34a1789c6d5e4f3g2h1i0j9k8l7m6n5o4p3q2r1s0t9u8v7"
