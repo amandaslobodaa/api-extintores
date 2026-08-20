@@ -38,16 +38,9 @@ class SecurityConfiguration(
         val configuration = CorsConfiguration()
 
         configuration.allowedOrigins = listOf("http://localhost:4200")
-        configuration.allowedMethods = listOf(
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE",
-            "OPTIONS"
-        )
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE",)
         configuration.allowedHeaders = listOf("*")
         configuration.allowCredentials = true
-
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
@@ -55,7 +48,6 @@ class SecurityConfiguration(
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-
         http {
             cors { }
             csrf {
