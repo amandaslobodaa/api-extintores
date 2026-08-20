@@ -15,16 +15,13 @@ import extintores_api.demo.service.EmpresaService
 class JWTUtil(
     private val empresaService: EmpresaService
 ) {
-    private val expiration: Long = 1200000 // 20 minutos
+    private val expiration: Long = 1200000
     @field:Value("\${jwt.secret}")
     private lateinit var secret: String
     private fun getSigningKey() =
         Keys.hmacShaKeyFor(secret.toByteArray())
 
-    fun generateToken(
-        descricao: String,
-        authorities: Collection<GrantedAuthority>
-    ): String {
+    fun generateToken(descricao: String, authorities: Collection<GrantedAuthority>): String {
         return Jwts.builder()
             .subject(descricao)
             .claim(
@@ -37,6 +34,7 @@ class JWTUtil(
             .signWith(getSigningKey())
             .compact()
     }
+    
     fun isValid(jwt: String?): Boolean {
         if (jwt.isNullOrBlank()) {
             return false
@@ -53,6 +51,7 @@ class JWTUtil(
             false
         }
     }
+    
     fun getAuthentication(jwt: String?): Authentication {
         val claims = Jwts.parser()
             .verifyWith(getSigningKey())
@@ -60,8 +59,7 @@ class JWTUtil(
             .parseSignedClaims(jwt)
             .payload
         val username = claims.subject
-        val rolesList = claims["role"] as? List<*>
-            ?: emptyList<Any>()
+        val rolesList = claims["role"] as? List<*>?: emptyList<Any>()
         val authorities = rolesList.map {
             SimpleGrantedAuthority(it.toString())
         }
